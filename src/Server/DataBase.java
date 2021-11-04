@@ -9,8 +9,8 @@ import java.sql.Statement;
 public class DataBase {
 	final String driver = "oracle.jdbc.driver.OracleDriver";
 	final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-	final String db_id = "thevlakk1";
-	final String db_pw = "dhfl265213";
+	final String db_id = "";
+	final String db_pw = "";
 
 	private Connection con;
 	private Statement stmt;
@@ -27,14 +27,14 @@ public class DataBase {
 	}
 
 	/*
-	 * ¾ÆÀÌµğ Áßº¹Ã¼Å© ¸Ş¼­µå
+	 * ì•„ì´ë”” ì¤‘ë³µì²´í¬ ë©”ì„œë“œ
 	 */
 	public boolean checkID(String id) {
 		try {
 			String sql = String.format("SELECT ID FROM HERE_HELP_CLIENTS WHERE ID = '%s'", id);
 			ResultSet rs = stmt.executeQuery(sql);
 
-			// Áßº¹µÈ ¾ÆÀÌµğ°¡ ¾øÀ» ½Ã
+			// ì¤‘ë³µëœ ì•„ì´ë””ê°€ ì—†ì„ ì‹œ
 			if (!rs.next())
 				return true;
 
@@ -46,14 +46,14 @@ public class DataBase {
 	}
 
 	/*
-	 * ´Ğ³×ÀÓ Áßº¹Ã¼Å© ¸Ş¼­µå
+	 * ë‹‰ë„¤ì„ ì¤‘ë³µì²´í¬ ë©”ì„œë“œ
 	 */
 	public boolean checkNickname(String nickname) {
 		try {
 			String sql = String.format("SELECT NICKNAME FROM HERE_HELP_CLIENTS WHERE NICKNAME = '%s'", nickname);
 			ResultSet rs = stmt.executeQuery(sql);
 
-			// Áßº¹µÈ ´Ğ³×ÀÓÀÌ ¾øÀ» ½Ã
+			// ì¤‘ë³µëœ ë‹‰ë„¤ì„ì´ ì—†ì„ ì‹œ
 			if (!rs.next())
 				return true;
 
@@ -64,7 +64,7 @@ public class DataBase {
 		return false;
 	}
 	/*
-	 * °èÁ¤ »ı¼º ¸Ş¼­µå
+	 * ê³„ì • ìƒì„± ë©”ì„œë“œ
 	 */
 	public boolean createAccount(String id, String name, String password, String nickname, String phonenumber) {
 		try {
@@ -80,7 +80,7 @@ public class DataBase {
 		return false;
 	}
 	/*
-	 * ·Î±×ÀÎ ¿äÃ» ¸Ş¼­µå
+	 * ë¡œê·¸ì¸ ìš”ì²­ ë©”ì„œë“œ
 	 */
 	public boolean login(String id, String password) {
 		try {
@@ -89,7 +89,7 @@ public class DataBase {
 
 			if (rs.next()) {
 				String rs_password = rs.getString("PASSWORD");
-				// ÀÔ·ÂÇÑ ºñ¹Ğ¹øÈ£¿Í ÀÏÄ¡ ½Ã
+				// ì…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸ì™€ ì¼ì¹˜ ì‹œ
 				if (rs_password.equals(password))
 					return true;
 			}				
@@ -101,13 +101,13 @@ public class DataBase {
 		return false;
 	}
 	/* 
-	 * ÇØ´ç ¾ÆÀÌµğÀÇ ´Ğ³×ÀÓ ¹İÈ¯
+	 * í•´ë‹¹ ì•„ì´ë””ì˜ ë‹‰ë„¤ì„ ë°˜í™˜
 	 */
 	public String getNickname(String id) {
 		try {
 			String sql = String.format("SELECT NICKNAME FROM HERE_HELP_CLIENTS WHERE ID = '%s'", id);
 			ResultSet rs = stmt.executeQuery(sql);
-			// ´Ğ³×ÀÓ ¹İÈ¯
+			// ë‹‰ë„¤ì„ ë°˜í™˜
 			if (rs.next()) 
 				return rs.getString("NICKNAME");			
 
