@@ -9,8 +9,8 @@ import java.sql.Statement;
 public class DataBase {
 	final String driver = "oracle.jdbc.driver.OracleDriver";
 	final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-	final String db_id = "";
-	final String db_pw = "";
+	final String db_id = "db_id";
+	final String db_pw = "db_pw";
 
 	private Connection con;
 	private Statement stmt;
