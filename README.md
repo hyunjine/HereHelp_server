@@ -22,7 +22,7 @@
 > **Client**
 > * JAVA - Android Stuio
 > * Google Map API
-> * JSON GSON
+> * JSON
 
 ## 어플 소개
 
