@@ -23,6 +23,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 
+import org.json.simple.JSONObject;
+
 public class Mainform extends JFrame {
 	
 	private JPanel contentPane;
@@ -40,7 +42,7 @@ public class Mainform extends JFrame {
 					Mainform frame = new Mainform();
 					frame.setVisible(true);		
 					
-					// ¼­¹ö °¡µ¿
+					// ì„œë²„ ê°€ë™
 					new Server().start();
 					
 				} catch (Exception e) {
@@ -55,7 +57,7 @@ public class Mainform extends JFrame {
 	 * Create the frame.
 	 */
 	public Mainform() {				
-		setTitle("¿©±âµµ¿ò_¼­¹ö");
+		setTitle("ì—¬ê¸°ë„ì›€_ì„œë²„");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 895, 393);
 		contentPane = new JPanel();
@@ -64,58 +66,65 @@ public class Mainform extends JFrame {
 		contentPane.setLayout(null);
 
 		/*
-		 * Á¢¼Ó ÇöÈ² ¶óº§
+		 * ì ‘ì† í˜„í™© ë¼ë²¨
 		 */
-		lb_currentClientNumber = new JLabel("ÇöÀç Á¢¼Ó ÀÎ¿ø : 0¸í");
-		lb_currentClientNumber.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		lb_currentClientNumber = new JLabel("í˜„ì¬ ì ‘ì† ì¸ì› : 0ëª…");
+		lb_currentClientNumber.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		lb_currentClientNumber.setBounds(24, 27, 184, 15);
 		contentPane.add(lb_currentClientNumber);
 		/*
-		 * °øÁö»çÇ× ÆÇ³Ú
+		 * ê³µì§€ì‚¬í•­ íŒë„¬
 		 */
 		JPanel pn_notice = new JPanel();
 		pn_notice.setBorder(
-				new TitledBorder(null, "°øÁö»çÇ×", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				new TitledBorder(null, "ê³µì§€ì‚¬í•­", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pn_notice.setBounds(24, 52, 399, 292);
 		contentPane.add(pn_notice);
 		pn_notice.setLayout(null);
 
 		/*
-		 * Á¦¸ñ ¶óº§
+		 * ì œëª© ë¼ë²¨
 		 */
-		JLabel lb_title = new JLabel("Á¦¸ñ");
+		JLabel lb_title = new JLabel("ì œëª©");
 		lb_title.setBounds(22, 25, 40, 15);
 		pn_notice.add(lb_title);
-		// Á¦¸ñ ÅØ½ºÆ®
+		// ì œëª© í…ìŠ¤íŠ¸
 		tf_titleField = new JTextField();
 		tf_titleField.setBounds(69, 22, 226, 21);
 		pn_notice.add(tf_titleField);
 		tf_titleField.setColumns(10);
 		/*
-		 * ½ºÅ©·Ñ ÆÇ³Ú
+		 * ìŠ¤í¬ë¡¤ íŒë„¬
 		 */
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(69, 50, 226, 232);
 		pn_notice.add(scrollPane);
-		// ³»¿ë ÅØ½ºÆ®
+		// ë‚´ìš© í…ìŠ¤íŠ¸
 		JTextArea tf_contentField = new JTextArea();
 		scrollPane.setViewportView(tf_contentField);
 		
 		/*
-		 * ³»¿ë ¶óº§
+		 * ë‚´ìš© ë¼ë²¨
 		 */
-		JLabel lb_content = new JLabel("³»¿ë");
+		JLabel lb_content = new JLabel("ë‚´ìš©");
 		lb_content.setBounds(22, 50, 40, 15);
 		pn_notice.add(lb_content);
 		/*
-		 * Àü¼Û ¹öÆ° Å¬¸¯
+		 * ì „ì†¡ ë²„íŠ¼ í´ë¦­
 		 */
-		JButton btn_send = new JButton("Àü¼Û");
+		JButton btn_send = new JButton("ì „ì†¡");
 		btn_send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String notice_title = tf_titleField.getText();
 				String notice_content = tf_contentField.getText();
-
+				
+				JSONObject data = new JSONObject();
+				data.put("flag", "notice");
+				data.put("title", notice_title);
+				data.put("content", notice_content);
+				
+				Server.sendToAll(data);
+				
 				tf_contentField.setText("");
 			}
 		});
@@ -123,13 +132,13 @@ public class Mainform extends JFrame {
 		pn_notice.add(btn_send);
 
 		/*
-		 * Á¢¼Ó ÇöÈ² ÆÇ³Ú
+		 * ì ‘ì† í˜„í™© íŒë„¬
 		 */
 		JPanel pn_connectionStatus = new JPanel();
 		pn_connectionStatus.setLayout(null);
 		pn_connectionStatus.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Á¢¼Ó ÇöÈ²", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				"ì ‘ì† í˜„í™©", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pn_connectionStatus.setBounds(435, 52, 432, 292);
 		contentPane.add(pn_connectionStatus);
 		
@@ -141,7 +150,7 @@ public class Mainform extends JFrame {
 	}
 	
 	public static void setLb_currentClientNumber(int size) {
-		lb_currentClientNumber.setText("ÇöÀç Á¢¼Ó ÀÎ¿ø : " + size + "¸í");
+		lb_currentClientNumber.setText("í˜„ì¬ ì ‘ì† ì¸ì› : " + size + "ëª…");
 	}
 	
 	public static void setTf_currentStatus(String status) {
